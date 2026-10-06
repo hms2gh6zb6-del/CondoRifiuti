@@ -1,0 +1,29 @@
+{
+  "address": {
+    "street": "Via San Felice",
+    "number": "20",
+    "city": "Bologna",
+    "province": "BO",
+    "source": "indirizzo reale verificato",
+    "waste_zone_status": "DA_VERIFICARE"
+  },
+  "municipality": {
+    "name": "Bologna",
+    "operator": "Hera",
+    "note": "Il servizio di raccolta varia per area/zona e deve essere verificato per l'indirizzo prima di mostrare istruzioni operative."
+  },
+  "verified_context": [
+    {
+      "title": "Centro storico",
+      "fact": "Il Comune ha modificato nel tempo le modalità di raccolta nel centro storico; nel 2023 è cessata la raccolta porta a porta di carta e plastica nel centro storico, con cassonetti stradali.",
+      "source": "Comune di Bologna",
+      "source_url": "https://www.comune.bologna.it/novita/comunicati-stampa/piano-straordinario-di-cura-e-pulizia-del-centro-storico-da-lunedi-10-luglio-si-potenzi"
+    },
+    {
+      "title": "Lavino di Mezzo",
+      "fact": "Nel 2026 è cambiata la modalità di raccolta nella porzione di territorio interessata, con cassonetti stradali e Carta Smeraldo.",
+      "source": "Comune di Bologna / Hera",
+      "source_url": "https://www.comune.bologna.it/novita/comunicati-stampa/servizi-ambientali-lavino-di-mezzo-nel-territorio-che-fa-parte-del-quartiere-borgo-panigale-reno-si"
+    }
+  ]
+}

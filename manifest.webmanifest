@@ -1,0 +1,11 @@
+{
+  "name": "CondoRifiuti",
+  "short_name": "CondoRifiuti",
+  "description": "Gestione della raccolta rifiuti per condomini.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#123b2a",
+  "lang": "it-IT",
+  "icons": []
+}
