@@ -7,62 +7,295 @@
 <link rel="manifest" href="manifest.webmanifest">
 <title>CondoRifiuti</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f6f8;color:#17202a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f6f8;color:#17202a}
 header{background:#123b2a;color:#fff;padding:18px 18px 20px;padding-top:calc(18px + env(safe-area-inset-top))}
-main{max-width:700px;margin:auto;padding:18px;padding-bottom:35px}.brand{font-size:21px;font-weight:800}.sub{opacity:.8;font-size:13px;margin-top:4px}
+main{max-width:700px;margin:auto;padding:18px;padding-bottom:35px}
+.brand{font-size:21px;font-weight:800}
+.sub{opacity:.8;font-size:13px;margin-top:4px}
 .card{background:#fff;border:1px solid #e1e5e8;border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #00000008}
-.next{background:#eaf6ee;border:1px solid #cde7d5}.next b{font-size:22px}.muted{color:#68757e}.small{font-size:12px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.action{padding:15px;border:0;border-radius:13px;background:#eef2f4;text-align:left;font-weight:700}.action.primary{background:#123b2a;color:#fff}
-.search{display:flex;gap:8px}.search input{flex:1}.search button{background:#123b2a;color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:700}
-input,select,textarea{width:100%;padding:12px;border:1px solid #cbd3d9;border-radius:10px;background:#fff}
+.next{background:#eaf6ee;border:1px solid #cde7d5}
+.next b{font-size:22px}
+.muted{color:#68757e}
+.small{font-size:12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.action{padding:15px;border:0;border-radius:13px;background:#eef2f4;text-align:left;font-weight:700}
+.action.primary{background:#123b2a;color:#fff}
+.search{display:flex;gap:8px}
+.search input{flex:1}
+.search button{background:#123b2a;color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:700}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd3d9;border-radius:10px;background:#fff;margin-top:6px}
+label{display:block;font-size:13px;font-weight:700;margin-top:12px}
 .result{margin-top:12px;padding:13px;background:#eef8f1;border:1px solid #cfe8d6;border-radius:11px}
 .warn{margin-top:12px;padding:13px;background:#fff4d6;border-left:4px solid #d59e00;border-radius:8px}
-.install{display:none;background:#fff;border:1px dashed #8da197;padding:14px;border-radius:13px;margin-bottom:14px}.install.show{display:block}
-nav{display:flex;gap:8px;margin-bottom:14px}nav button{flex:1;border:1px solid #d8dee2;background:#fff;padding:10px;border-radius:10px}nav .on{background:#123b2a;color:#fff}
-.panel{display:none}.panel.on{display:block}
+.install{display:none;background:#fff;border:1px dashed #8da197;padding:14px;border-radius:13px;margin-bottom:14px}
+nav{display:flex;gap:8px;margin-bottom:14px}
+nav button{flex:1;border:1px solid #d8dee2;background:#fff;padding:10px;border-radius:10px}
+nav .on{background:#123b2a;color:#fff}
+.panel{display:none}
+.panel.on{display:block}
+.success{background:#eaf6ee;border:1px solid #cde7d5;border-radius:13px;padding:14px;margin-top:12px}
+.form-button{width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:#123b2a;color:#fff;font-weight:800;font-size:16px}
+.secondary-button{width:100%;margin-top:10px;padding:12px;border:1px solid #d8dee2;border-radius:12px;background:#fff;font-weight:700}
 @media(max-width:420px){.actions{grid-template-columns:1fr}}
 </style>
 </head>
+
 <body>
-<header><div class="brand">CondoRifiuti</div><div class="sub">V1 · condominio pilota · Bologna</div></header>
+
+<header>
+<div class="brand">CondoRifiuti</div>
+<div class="sub">Gestione rifiuti per condomini · Bologna</div>
+</header>
+
 <main>
+
 <div id="installBox" class="install">
 <b>📱 Installa CondoRifiuti</b>
-<div class="small" style="margin-top:5px">Su iPhone: apri questa pagina in Safari → Condividi → <b>Aggiungi alla schermata Home</b>.</div>
+<div class="small" style="margin-top:5px">
+Su iPhone: apri questa pagina in Safari → Condividi → <b>Aggiungi alla schermata Home</b>.
+</div>
 </div>
 
-<nav><button class="on" onclick="panel('resident',this)">👤 Residente</button><button onclick="panel('admin',this)">👨‍💼 Admin</button></nav>
+<nav>
+<button class="on" onclick="panel('resident',this)">👤 Residente</button>
+<button onclick="panel('admin',this)">👨‍💼 Admin</button>
+</nav>
 
 <section id="resident" class="panel on">
-<div class="card"><div class="muted small">Condominio pilota</div><h2 style="margin:5px 0">Via San Felice 20 · Bologna</h2>
-<div class="warn"><b>⚠️ Zona rifiuti da verificare</b><br><span class="small">Abbiamo scelto un indirizzo reale, ma non mostriamo ancora un calendario operativo inventato. Il prossimo step è risolvere automaticamente zona e servizio tramite dati ufficiali.</span></div>
+
+<div class="card" id="condoResident">
+<div class="muted small">Il tuo condominio</div>
+<h2 style="margin:5px 0">Nessun condominio configurato</h2>
+<p class="muted">L'amministratore deve prima configurare il condominio.</p>
 </div>
 
-<div class="card next"><div class="muted small">Stato del servizio</div><b>Configurazione in verifica</b><p class="small">Quando la zona sarà verificata, qui apparirà la prossima raccolta reale.</p></div>
+<div class="card next">
+<div class="muted small">Stato del servizio</div>
+<b>Configurazione in verifica</b>
+<p class="small">Quando l'indirizzo sarà verificato, qui apparirà la prossima raccolta reale.</p>
+</div>
 
-<div class="card"><h3>🔎 Dove lo butto?</h3>
-<div class="search"><input id="q" placeholder="es. padella, cartone pizza"><button onclick="searchWaste()">Cerca</button></div>
-<div id="ans"></div></div>
+<div class="card">
+<h3>🔎 Dove lo butto?</h3>
+<div class="search">
+<input id="q" placeholder="es. padella, cartone pizza">
+<button onclick="searchWaste()">Cerca</button>
+</div>
+<div id="ans"></div>
+</div>
 
 <div class="actions">
-<button class="action primary" onclick="alert('Nella V1 reale: fotocamera → riconoscimento oggetto → regola locale verificata.')">📷 Riconosci da foto</button>
-<button class="action" onclick="alert('Segnalazione registrata nel prototipo.')">⚠️ Segnala problema</button>
+<button class="action primary" onclick="alert('Questa funzione verrà collegata al riconoscimento fotografico.')">📷 Riconosci da foto</button>
+<button class="action" onclick="alert('Qui potrai segnalare un problema.')">⚠️ Segnala problema</button>
 <button class="action" onclick="alert('Qui compariranno le comunicazioni dell’amministratore.')">📢 Comunicazioni</button>
-<button class="action" onclick="alert('Qui comparirà il calendario una volta risolta la zona.')">📅 Calendario</button>
+<button class="action" onclick="alert('Qui comparirà il calendario della raccolta.')">📅 Calendario</button>
 </div>
+
 </section>
 
 <section id="admin" class="panel">
-<div class="card"><h2>Dashboard amministratore</h2><p class="muted">Condominio pilota: Via San Felice 20</p>
-<div class="next"><b>Configurazione indirizzo</b><br><span class="small">Comune: Bologna · Gestore: Hera · Zona: da verificare</span></div>
+
+<div id="adminSetup">
+
+<div class="card">
+<h2>🏢 Crea il tuo condominio</h2>
+<p class="muted">Configura il condominio per iniziare la prova gratuita di 30 giorni.</p>
+
+<label>Nome del condominio
+<input id="condoName" placeholder="es. Condominio Verdi">
+</label>
+
+<label>Via
+<input id="condoStreet" placeholder="es. Via Roma">
+</label>
+
+<label>Numero civico
+<input id="condoNumber" placeholder="es. 25">
+</label>
+
+<label>Comune
+<input id="condoCity" value="Bologna">
+</label>
+
+<label>Nome amministratore
+<input id="adminName" placeholder="Nome e cognome">
+</label>
+
+<label>Email amministratore
+<input id="adminEmail" type="email" placeholder="nome@email.it">
+</label>
+
+<button class="form-button" onclick="createCondo()">Crea condominio</button>
 </div>
-<div class="card"><h3>📢 Comunicazione</h3><textarea rows="4" placeholder="Scrivi un avviso ai residenti..."></textarea><button class="action primary" style="margin-top:10px;width:100%" onclick="alert('Comunicazione pubblicata nel prototipo.')">Pubblica</button></div>
-<div class="card"><h3>⚠️ Segnalazioni</h3><p>🔴 2 aperte</p><p>🟡 1 in gestione</p><p>🟢 8 risolte</p></div>
+
+</div>
+
+<div id="adminDashboard" style="display:none">
+
+<div class="card">
+<div class="muted small">Dashboard amministratore</div>
+<h2 id="adminCondoName" style="margin:5px 0"></h2>
+<p id="adminAddress" class="muted"></p>
+
+<div class="success">
+<b>🆓 Prova gratuita attiva</b>
+<p class="small" style="margin-bottom:0">La prova dura 30 giorni.</p>
+<p class="small">Scadenza: <b id="trialEnd"></b></p>
+</div>
+</div>
+
+<div class="card">
+<h3>📍 Configurazione raccolta</h3>
+<div class="warn">
+<b>Zona da verificare</b>
+<p class="small">Il prossimo passo sarà verificare automaticamente il servizio corretto per questo indirizzo.</p>
+</div>
+</div>
+
+<div class="card">
+<h3>📢 Comunicazione</h3>
+<textarea id="communication" rows="4" placeholder="Scrivi un avviso ai residenti..."></textarea>
+<button class="action primary" style="margin-top:10px;width:100%" onclick="publishCommunication()">Pubblica</button>
+</div>
+
+<div class="card">
+<h3>👥 Residenti</h3>
+<p class="muted">Nessun residente ancora invitato.</p>
+<button class="secondary-button" onclick="alert('La funzione per invitare i residenti sarà attivata nel prossimo passo.')">+ Invita residenti</button>
+</div>
+
+</div>
+
 </section>
+
 </main>
+
 <script>
-function panel(id,b){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
-function searchWaste(){let q=document.getElementById('q').value.toLowerCase(),a=document.getElementById('ans');if(!q){a.innerHTML='';return}let x=q.includes('pizza')?'Cartone della pizza':'Oggetto non ancora presente nel database verificato';a.innerHTML='<div class="result"><b>'+x+'</b><br><span class="small">La regola di conferimento verrà restituita solo dopo la verifica della zona e della fonte locale.</span></div>'}
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+
+function panel(id,b){
+document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+document.getElementById(id).classList.add('on');
+document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));
+b.classList.add('on');
+}
+
+function createCondo(){
+
+const name=document.getElementById('condoName').value.trim();
+const street=document.getElementById('condoStreet').value.trim();
+const number=document.getElementById('condoNumber').value.trim();
+const city=document.getElementById('condoCity').value.trim();
+const admin=document.getElementById('adminName').value.trim();
+const email=document.getElementById('adminEmail').value.trim();
+
+if(!name||!street||!number||!city||!admin||!email){
+alert('Compila tutti i campi prima di creare il condominio.');
+return;
+}
+
+const start=new Date();
+const end=new Date(start);
+end.setDate(end.getDate()+30);
+
+const condo={
+name,
+street,
+number,
+city,
+admin,
+email,
+trialStart:start.toISOString(),
+trialEnd:end.toISOString()
+};
+
+localStorage.setItem('condoRifiuti',JSON.stringify(condo));
+
+showCondo();
+
+alert('Condominio creato! La prova gratuita di 30 giorni è iniziata.');
+
+}
+
+function showCondo(){
+
+const saved=localStorage.getItem('condoRifiuti');
+
+if(!saved)return;
+
+const condo=JSON.parse(saved);
+const end=new Date(condo.trialEnd);
+const date=end.toLocaleDateString('it-IT');
+
+document.getElementById('condoResident').innerHTML=`
+<div class="muted small">Il tuo condominio</div>
+<h2 style="margin:5px 0">${escapeHtml(condo.name)}</h2>
+<p>📍 ${escapeHtml(condo.street)} ${escapeHtml(condo.number)} · ${escapeHtml(condo.city)}</p>
+<div class="success">
+<b>🆓 Prova gratuita attiva</b>
+<p class="small" style="margin-bottom:0">Scadenza prova: <b>${date}</b></p>
+</div>
+`;
+
+document.getElementById('adminSetup').style.display='none';
+document.getElementById('adminDashboard').style.display='block';
+
+document.getElementById('adminCondoName').textContent=condo.name;
+document.getElementById('adminAddress').textContent=condo.street+' '+condo.number+' · '+condo.city;
+document.getElementById('trialEnd').textContent=date;
+
+}
+
+function searchWaste(){
+
+let q=document.getElementById('q').value.toLowerCase();
+let a=document.getElementById('ans');
+
+if(!q){
+a.innerHTML='';
+return;
+}
+
+let x=q.includes('pizza')?'Cartone della pizza':'Oggetto non ancora presente nel database verificato';
+
+a.innerHTML=`
+<div class="result">
+<b>${x}</b><br>
+<span class="small">La regola di conferimento verrà restituita dopo la verifica della zona e della fonte locale.</span>
+</div>
+`;
+
+}
+
+function publishCommunication(){
+
+const text=document.getElementById('communication').value.trim();
+
+if(!text){
+alert('Scrivi prima una comunicazione.');
+return;
+}
+
+localStorage.setItem('condoCommunication',text);
+alert('Comunicazione salvata.');
+
+}
+
+function escapeHtml(text){
+
+const div=document.createElement('div');
+div.textContent=text;
+return div.innerHTML;
+
+}
+
+showCondo();
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('./sw.js');
+}
+
 </script>
-</body></html>
+
+</body>
+</html>
